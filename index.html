@@ -7,9 +7,55 @@
     <title>rock paper scissors</title>
 </head>
 <body>
-    <script src="script.js">
+ <div class="game-container">
+ 
+ 	<div class="game-heading">
+		<h1> Rock, Paper, Scissors</h1>
+	</div>
+	
+	<div id="game-components-container">
+		<div class="game-component rock"  data-choice="rock">
+			<img src="resources/rock.jpeg" alt="rock-hand-gesture">
+			<p>Rock</p>
+		</div>
 
+		<div class="game-component paper" data-choice="paper">
+			<img src="resources/paper.png" alt="paper-hand-gesture" >
+			<p>Paper</p>
+		</div>
 
-    </script>
+		<div class="game-component scissors"  data-choice="scissors">
+			<img  src="resources/scissors.png" alt="scissors-hand-gesture">
+			<p>Scissors</p>
+  		</div>
+	</div>
+ 	<div class="game-score-container">
+		<div class="players player">
+			<p>Player</P>
+			<div id="player-score" class="scores loosing">0</div>
+			<div id="player-total" class="scores">total:</div>
+			
+		</div>
+		<div class="players computer" >
+			<p>Computer</P>
+			<div id="computer-score" class="scores">1</div>
+			<div id="computer-total" class="scores">total:</div>
+			
+		</div>
+	</div>
+	<div class="notifications" >
+		<div class="alert">you loose!</div>		
+	</div>	
+	<div id="boxes" >
+		<p class="box start-game active">play 5 rounds</p>
+		<div id="round-complete" class="box"></div>	
+		<div id="next-round" class="box"></div>
+		<p class="box end-game">game complete</p>
+		<p class="score-board box"></p>
+		<button class="box" id="new-game" >Click New Game</button>
+	</div>	
+</div>
+
+    <script src="script.js"></script>
 </body>
 </html>

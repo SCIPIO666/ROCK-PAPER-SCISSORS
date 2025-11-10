@@ -1,5 +1,127 @@
 // This file contains the complete logic for a 5-round game of Rock Paper Scissors.
 
+const rockNode=document.querySelector(".rock");
+const paperNode=document.querySelector(".paper");
+const scissorsNode=document.querySelector(".scissors");
+const playPrompt=document.querySelector(".start-game");
+const scoreBoard=document.querySelector(".score-board");
+const roundComplete=document.querySelector("#round-complete");
+const playRoundPrompt=document.querySelector("#next-round");
+const gameCompletePrompt=document.querySelector(".end-game");
+const humanScoreDisplay=document.querySelector("#player-score");
+const computerScoreDisplay=document.querySelector("#computer-score");
+const humanTotalDisplay=document.querySelector("#player-total");
+const computerTotalDisplay=document.querySelector("#computer-total");
+const winnerLooserNotification=document.querySelector(".alert");
+const restartGame=document.querySelector("#new-game");
+let totalHumanScore = 0;
+let totalComputerScore = 0;
+let playedGames=[];
+
+
+//playing the game;	
+
+
+restartGame.addEventListener("click",(e)=>{
+        resetPlayedGames();
+        resetBoxes();
+});
+const playerChoices=document.querySelectorAll(".game-component");
+		playerChoices.forEach((playerChoice)=>{
+			
+			playerChoice.addEventListener("click",(e)=>{
+                resetBoxes();
+                let playerOption=playerChoice.dataset.choice;
+                updatePlayedGames();
+
+                if(playedGames.length==5){   
+                    updateGameProgress(playedGames);               
+                    playGame(playerOption);                 
+                    renderVerdict();
+                }else if(playedGames.length<5){
+                    playGame(playerOption);
+                    updateGameProgress(playedGames);
+
+                }else{
+                    resetPlayedGames();
+                     playGame(playerOption);
+                     updateGameProgress(playedGames);   
+                }
+ 
+			});
+		});
+
+function resetPlayedGames(){
+        playedGames=[];
+        winnerLooserNotification.textContent="Start New Game";
+        humanScoreDisplay.textContent= 0;
+        computerScoreDisplay.textContent= 0;
+        computerTotalDisplay.textContent=`Total: `;
+        humanTotalDisplay.textContent=`Total: `;
+        totalComputerScore=0;
+        totalHumanScore= 0;		 
+}
+function resetBoxes(){
+    const allLevels=document.querySelectorAll(".box");
+		allLevels.forEach((level)=>{
+
+			level.classList.remove("active");
+		});
+	playPrompt.classList.add("active");
+}
+function updatePlayedGames(){
+    playedGames.push(1);
+}
+
+function notifyUser(number){
+            roundComplete.textContent=`Round ${number} Complete`;
+            roundComplete.classList.add("active");
+            setTimeout(()=>{
+                if(number==5){
+                    roundComplete.classList.add("done");
+                    playRoundPrompt.classList.remove("active");
+                    playRoundPrompt.textContent="";   
+                    scoreBoard.classList.add("active");
+                    scoreBoard.textContent=winnerLooserNotification.textContent;               
+                    gameCompletePrompt.classList.add("active");
+                    restartGame.classList.add("active"); 
+                }else{
+                    roundComplete.classList.add("done");
+                    playRoundPrompt.textContent=`Play Round ${number+1}`;
+                    playRoundPrompt.classList.add("active");
+                    scoreBoard.classList.add("active");
+                    scoreBoard.textContent=winnerLooserNotification.textContent;
+                }
+            },1000);
+}
+function updateGameProgress(array){
+	switch(array.length){
+			case 1:
+                notifyUser(1);
+			break;
+
+			case 2:
+                 notifyUser(2);            
+			break;
+
+			case 3:
+                notifyUser(3);	
+	                       
+			break;
+
+			case 4:
+                notifyUser(4);                  
+			break;
+			case 5:
+                notifyUser(5);	
+            
+            break;
+			default:
+                resetBoxes();
+                resetPlayedGames();	
+	}
+}
+
 // Gets the computer's choice.
 function getComputerChoice() {
     let min = 1;
@@ -20,20 +142,11 @@ function getComputerChoice() {
     return computerSelection;
 }
 
-function getHumanChoice() {
-    let input = prompt("provide your playing choice", "rock");
-    let humanSelection = input.toLowerCase();
-    return humanSelection;
-}
-
-// Determines if the human wins.
-// It returns true for a human win, false for a human loss
-
-function playRound() {
+function playRound(humanChoice) {
     let humanScore = 0;
     let computerScore = 0;
 
-    let humanSelection = getHumanChoice();
+    let humanSelection = (humanChoice);
     let computerSelection = getComputerChoice();
 
         function humanWins() {
@@ -77,7 +190,7 @@ function playRound() {
             const verdict = humanWins();
 
             let logMsg;
-            if (verdict === true) {
+            if (verdict) {
                 switch (computerChoice) {
                     case "rock":
                         logMsg = messages.paperWins;
@@ -108,66 +221,57 @@ function playRound() {
     if (humanSelection === computerSelection) {
         humanScore = 1;
         computerScore = 1;
-
-        console.log(`you draw, ${humanSelection} equals ${computerSelection}, play another round
-        human score: ${humanScore}
-        computer score: ${computerScore}`);
+        winnerLooserNotification.textContent="draw, play another round";
             //accounts for draw scenario
     } else if (computerSelection === "rock") {
         humanSelection === "scissors" ? (computerScore = 1, humanScore = 0) : (computerScore = 0, humanScore = 1);
-
-        console.log(`${roundWinner_LooserLogging()}
-        human score: ${humanScore}
-        computer score: ${computerScore}`);
-
+        winnerLooserNotification.textContent=roundWinner_LooserLogging();
     } else if (computerSelection === "paper") {
         humanSelection === "scissors" ? (computerScore = 0, humanScore = 1) : (computerScore = 1, humanScore = 0);
-
-        console.log(`${roundWinner_LooserLogging()}
-        human score: ${humanScore}
-        computer score: ${computerScore}`);
+        winnerLooserNotification.textContent=roundWinner_LooserLogging();
 
     } else { // computerSelection = scissors
         humanSelection === "rock" ? (computerScore = 0, humanScore = 1) : (computerScore = 1, humanScore = 0);
-
-        console.log(`${roundWinner_LooserLogging()}
-        human score: ${humanScore}
-        computer score: ${computerScore}`);
+        winnerLooserNotification.textContent=roundWinner_LooserLogging();
     }
 
     let scores = [humanScore, computerScore];
     return scores;
 }
 
-function playGame() {
-    let totalHumanScore = 0;
-    let totalComputerScore = 0;
+function playGame(humanChoice) {
 
-    
-    for (let i = 0; i < 5; i++) {
-        let score = playRound();
-        totalComputerScore += score[1];
-        totalHumanScore += score[0];
-    }
+        let score = playRound(humanChoice);//returns scores array[human,computer]
 
-    let outcome;
+             totalComputerScore += score[1];
+             totalHumanScore += score[0];
+
+             computerTotalDisplay.textContent=`Total: ${totalComputerScore}`;
+             humanTotalDisplay.textContent=`Total: ${totalHumanScore}`;
+            humanScoreDisplay.textContent= `Round${playedGames.length}: ${score[0]}`;
+            computerScoreDisplay.textContent= `Round${playedGames.length}: ${score[1]}`;
+}
+function renderVerdict(){
+  let outcome;
     if (totalComputerScore > totalHumanScore) {
         outcome = "you loose!"; //computer has more points
     } else if (totalComputerScore < totalHumanScore) {
         outcome = "you win!"; //human has more points
     } else {
-        outcome = "you draw (play another round)";//equal points
+        outcome = "you draw (play another game)";//equal points
     }
 
     let msg = "game complete";
-    return `${msg}
-            ${outcome}
-           your score   :  ${totalHumanScore}
-           computer     : ${totalComputerScore}`;
+
+        winnerLooserNotification.textContent=msg+" ,"+outcome;
+        humanScoreDisplay.textContent= humanScore;
+        computerScoreDisplay.textContent= computerScore;
+        computerTotalDisplay.textContent=totalComputerScore;
+        humanTotalDisplay.textContent=totalHumanScore;
+        return outcome;
 }
 
 
-console.log(playGame());
 
 
 

@@ -38,3 +38,224 @@ p {
     font-size: 1rem; /* 1 * 16px = 16px */
     margin-bottom: 1em;
 }
+.game-component img{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 2px solid black;
+	color: purple;
+	padding: 5px;
+	margin: 5px 20px 0 20px;
+	transition: transform .2s ease-in-out ,
+
+}
+.game-component p{
+	padding: 5px;
+	margin: 0 40px;
+	
+}
+.game-component {
+	transition: all .3s ease-in-out;
+}
+.game-component:hover {
+	transform: scale(0.8);
+	border: 2px solid grey;
+	padding: 5px;
+	color: red;
+	background-color: white;
+	border-radius: 5%;
+	box-shadow: 1px 1px 1px rgba(0, 0,0 , 0.1);
+}
+.game-component:active{
+color: yellow;
+background-color: black;
+transform: rotateX('360');
+}
+#game-components-container{
+	width: 70%;
+	border-radius: 5px;
+	color: green;
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+
+}
+.game-container{
+	width: 60vw;
+	height: 60vh;
+	padding: 5px;
+	border-radius: 5px;
+	border: 2px solid black;
+	border-top: none;
+	display: flex;
+	flex-direction: column; 
+	justify-content: center;
+	align-items: center;
+	margin: 100px auto;
+	position: relative;
+	
+}
+.game-heading h1{
+	width: 70%;
+	margin: 0 auto;
+}
+.game-heading{
+	padding: 5px ;
+	background-color: black;
+	color: yellow;
+	width: 100%;
+	margin: 0 0 15px 0;
+	position: absolute;
+	top: -74px;
+
+}
+.game-score-container{
+	display: flex;
+	flex-direction: row;
+	width: 70%;
+	margin: 20px;
+
+	padding-left: 70px;
+	gap: 10px;
+
+}
+.players{
+	width: 30%;
+	padding: 5px;	
+	margin: 0;
+	height: 100px;
+
+}
+
+.players p,.scores{
+	padding: 2px;
+	margin: 0 auto;
+	width: 50%;
+	text-align: center;
+
+
+}
+.players p{
+	background-color: black;
+	border-radius: 5%;
+	color: white;
+	padding: 5px;
+	width: fit-content;
+	border: 2px solid black;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.computer{
+	border-left: 2px solid black;
+}
+.loosing{
+	color: red;
+}
+.alert{
+	width: 45%;
+	padding: 10px;
+	border-radius: 5%;
+	margin: 0 auto;
+	text-align: left;
+	color: blue;
+}		
+.notifications{
+	width: 100%;
+}
+#boxes{
+	position: absolute;
+	top: 0px;
+	right: 50px;
+	height: 350px;
+	width: 100px;
+	display: flex;
+	flex-direction: column;
+
+
+}
+
+#boxes p,.box{
+	padding: 4px;
+	border: 2px solid grey;
+	border-radius: 5%;
+	box-shadow: 1px 1px 1px rgba(0, 0,0 , 0.2);
+	margin: 2px 1px;
+	background-color: green;
+	color: white;
+	width: 140px;
+}
+
+.box{
+	transition: opacity .6s ease-out,transform .6s ease-out;
+	opacity: 0;
+	transform: translateX(100%);
+}
+#boxes p{
+	font-weight: bold;
+	color: yellow;
+	
+}
+
+.active{
+	background-color: black;
+	opacity: 1;
+	transform: translateX(0);
+}
+.done{
+	background-color: burlywood;
+	color: red;
+}
+.score-board{
+	background-color: greenyellow;
+	color: darkblue;
+}
+ @keyframe glow {
+ from {
+	 transform: scale(0.7);
+	 background-color: grey;
+	 }
+ to { 
+	transform: scale(1.2);
+	 background-color: black;
+ }
+ }
+#next-round{
+  animation-name: colors;
+  animation-duration: .3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+ }
+ @keyframes colors {
+  0% {
+	 transform: scale(0.9);
+	 background-color: grey;
+	 }
+  20% { 
+	background-color: palegreen
+ }
+  40% { 
+	background-color: paleturquoise; 
+	 }
+  100% {
+	transform: scale(1.1);
+	 background-color: black;
+	}
+ }
+ #new-game{
+  animation-name: button;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+ }
+ @keyframes button{
+  0% {
+	 transform: scale(0.9);
+	 background-color: rgb(7, 116, 38);
+	 }
+  100% {
+	transform: scale(1.1);
+	 background-color: black;
+	 color: yellow;
+	}
+ }
